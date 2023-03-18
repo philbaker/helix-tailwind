@@ -24,10 +24,8 @@
     ($ counter)))
 
 (defonce root (rdom/createRoot (js/document.getElementById "app")))
-(defn ^:dev/after-load start
-  []
+(defn ^:dev/after-load start []
   (.render root ($ app)))
 
-(defn ^:export main
-  []
+(defn ^:export main []
   (start))
