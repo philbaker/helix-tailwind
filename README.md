@@ -2,6 +2,8 @@
 
 A starting point with [Helix](https://github.com/lilactown/helix) and Tailwind based on [reagent-tailwind](https://github.com/philbaker/reagent-tailwind)
 
+Makes use of React's useState and React Router to demonstrate interop.
+
 ## Setup
 
 ### Install dependencies

@@ -1,27 +1,26 @@
 (ns app.core
-  (:require [helix.core :refer [defnc $ <>]]
-            [helix.hooks :as hooks]
+  (:require [app.home :refer [home]]
+            [app.counter :refer [counter]]
+            [helix.core :refer [defnc $ <>]]
             [helix.dom :as d]
-            ["react-dom/client" :as rdom]))
+            ["react-dom/client" :as rdom]
+            ["react-router-dom" :refer [BrowserRouter Route Routes Link]]))
 
 (defnc header []
-  (d/div {:class "px-6"}
-     (d/h1 {:class "text-2xl mt-6"} 
+  (d/div {:className "px-6"}
+     (d/h1 {:className "text-2xl mt-6"} 
            "Helix + Tailwind starter")))
-
-(defnc counter []
-  (let [[state set-state] (hooks/use-state 0)]
-    (d/div {:class "mt-6 px-6 flex"} 
-           (d/button {:class "p-2 bg-blue-200"
-                      :on-click #(set-state dec)} "-")
-           (d/span {:class "p-2 bg-blue-100"} state)
-           (d/button {:class "p-2 bg-blue-200" 
-                      :on-click #(set-state inc)} "+"))))
 
 (defnc app []
   (<>
-    ($ header)
-    ($ counter)))
+    ($ BrowserRouter
+       (d/nav {:className "px-6 space-x-4 mt-4"}
+         ($ Link {:to "/" :relative "path" :className "text-blue-800 hover:underline"} "Home")
+         ($ Link {:to "/counter" :relative "path" :className "text-blue-800 hover:underline"} "Counter"))
+       ($ header)
+       ($ Routes
+          ($ Route {:path "/" :element [($ home {:key 1})]})
+          ($ Route {:path "/counter" :element [($ counter {:key 2})]})))))
 
 (defonce root (rdom/createRoot (js/document.getElementById "app")))
 (defn ^:dev/after-load start []
